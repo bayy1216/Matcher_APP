@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'common/router/go_router.dart';
 import 'common/theme/campus_match_theme.dart';
 
 void main() async {
@@ -9,12 +10,13 @@ void main() async {
   runApp(const ProviderScope(child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
+  Widget build(BuildContext context,WidgetRef ref) {
+    final router = ref.watch(routerProvider);
+    return MaterialApp.router(
       title: 'CampusMatch',
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
@@ -29,7 +31,7 @@ class MyApp extends StatelessWidget {
       darkTheme: CampusMatchTheme.darkThemeData,
       themeMode: ThemeMode.light,
       debugShowCheckedModeBanner: false,
-      home: Container(child:Text('gg')),
+      routerConfig: router,
     );
   }
 }
