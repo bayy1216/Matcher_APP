@@ -9,6 +9,18 @@
 # packages, and plugins designed to encourage good coding practices.
 include: package:flutter_lints/flutter.yaml
 
+analyzer:
+  language:
+    strict-raw-types: true
+    strict-casts: true
+  plugins:
+    - custom_lint
+
+custom_lint:
+  rules:
+    - provider_paramteers
+    - avoid_public_notifier_properties
+
 linter:
   # The lint rules applied to this project can be customized in the
   # section below to disable rules from the `package:flutter_lints/flutter.yaml`

@@ -29,7 +29,7 @@ class _OpensourceScreenState extends State<OpensourceScreen> {
     return await rootBundle.loadString('asset/$filePath');
   }
 
-  T _tryConverting<T>(dynamic json) {
+  T _tryConverting<T>(Map<String,dynamic> json) {
     switch (T) {
       case Package:
         return Package.fromJson(json) as T;
@@ -41,8 +41,8 @@ class _OpensourceScreenState extends State<OpensourceScreen> {
   Future<List<T>> getObjectList<T>(String filePath) async {
     final string = await getJsonString(filePath);
     final json = jsonDecode(string);
-    if (json is List) {
-      return json.map<T>((e) => _tryConverting(e)).toList();
+    if (json is List<T>) {
+      return json.map<T>((e) => _tryConverting(e as Map<String, dynamic>)).toList();
     }
     return [];
   }
