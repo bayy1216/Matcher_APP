@@ -16,7 +16,7 @@ class CampusMatchTheme{
       useMaterial3: true,
 
       colorScheme: colorScheme,
-      textTheme: _textTheme,
+      //textTheme: _textTheme,
       appBarTheme: AppBarTheme(
         backgroundColor: colorScheme.background,
         elevation: 0,
@@ -33,7 +33,7 @@ class CampusMatchTheme{
           _lightFillColor.withOpacity(0.80),
           _darkFillColor,
         ),
-        contentTextStyle: _textTheme.titleMedium!.apply(color: _darkFillColor),
+        //contentTextStyle: _textTheme.titleMedium!.apply(color: _darkFillColor),
       ),
     );
   }
@@ -74,8 +74,5 @@ class CampusMatchTheme{
   );
 
 
-  static const TextTheme _textTheme = TextTheme(
-
-  );
 
 }
