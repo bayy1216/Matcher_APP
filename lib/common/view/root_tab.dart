@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../layout/default_layout.dart';
 import '../provider/bottom_nav_provider.dart';
-import 'my_screen.dart';
+import '../../my/view/my_screen.dart';
 
 class RootTab extends ConsumerWidget {
   static String get routeName => 'root_tab';
@@ -24,7 +24,7 @@ class RootTab extends ConsumerWidget {
             children: [
               Container(color: Colors.blue,child: Center(child: Text('Home'),),),
               Container(color: Colors.green,child: Center(child: Text('Search'),),),
-              Container(color: Colors.yellow,child: Center(child: Text('Add'),),),
+              const SizedBox.shrink(),
               Container(color: Colors.purple,child: Center(child: Text('Like'),),),
               MyScreen(),
             ],
@@ -44,7 +44,12 @@ class RootTab extends ConsumerWidget {
             unselectedFontSize: 11,
             iconSize: 23,
             type: BottomNavigationBarType.fixed,
-            onTap: ref.read(bottomNavProvider.notifier).changePage,
+            onTap: (value) {
+              if(value == 2){
+                return;
+              }
+              ref.read(bottomNavProvider.notifier).changePage(value);
+            },
             currentIndex: currentIndex,
             enableFeedback: true,
             items: BottomNavPage.values.map((e) {
@@ -52,7 +57,7 @@ class RootTab extends ConsumerWidget {
                 icon: currentIndex == e.index
                     ? Icon(e.iconData)
                         .animate()
-                        .scale(duration: 150.ms, begin: Offset(0.9, 0.9))
+                        .scale(duration: 150.ms, begin: const Offset(0.9, 0.9))
                     : Icon(e.iconData),
                 label: e.korean,
               );
@@ -67,7 +72,7 @@ class RootTab extends ConsumerWidget {
 enum BottomNavPage {
   home('홈', Icons.home),
   job('직업', Icons.work),
-  reservations('예약', Icons.calendar_today),
+  reservations('', Icons.calendar_today),
   alarm('알림', Icons.notifications),
   my('마이', Icons.person);
 

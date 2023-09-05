@@ -7,7 +7,7 @@ final routerProvider = Provider<GoRouter>((ref){
   final provider = ref.read(navigationProvider);
   return GoRouter(
     debugLogDiagnostics: true,
-    initialLocation: '/',
+    initialLocation: '/login',
     routes: provider.routes,
     refreshListenable: provider,
     redirect: provider.redirectLogic,
