@@ -1,85 +1,80 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../layout/default_layout.dart';
-import '../provider/bottom_nav_provider.dart';
-import '../../my/view/my_screen.dart';
 
-class RootTab extends ConsumerWidget {
+class RootTab extends StatelessWidget {
   static String get routeName => 'root_tab';
+  final StatefulNavigationShell navigationShell;
 
-  const RootTab({Key? key}) : super(key: key);
+  const RootTab({
+    Key? key,
+    required this.navigationShell,
+  }) : super(key: key);
 
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final currentIndex = ref.watch(bottomNavProvider);
-    return WillPopScope(
-      onWillPop: ref.read(bottomNavProvider.notifier).willPopAction,
-      child: DefaultLayout(
-        body: SafeArea(
-          child: IndexedStack(
-            index: currentIndex,
-            children: [
-              Container(color: Colors.blue,child: Center(child: Text('Home'),),),
-              Container(color: Colors.green,child: Center(child: Text('Search'),),),
-              const SizedBox.shrink(),
-              Container(color: Colors.purple,child: Center(child: Text('Like'),),),
-              MyScreen(),
-            ],
-          ),
+  Widget build(BuildContext context) {
+    final index = navigationShell.currentIndex;
+    final currentIndex = index > 2 ? index + 1 : index;
+    return DefaultLayout(
+      body: SafeArea(
+        child: navigationShell,
+      ),
+      bottomNavigationBar: Theme(
+        //아이콘 클릭시 물결펴치는 효과 제거
+        data: ThemeData(
+          splashColor: Colors.transparent,
+          highlightColor: Colors.transparent,
         ),
-        bottomNavigationBar: Theme(
-          //아이콘 클릭시 물결펴치는 효과 제거
-          data: ThemeData(
-            splashColor: Colors.transparent,
-            highlightColor: Colors.transparent,
-          ),
-          child: BottomNavigationBar(
-            backgroundColor: Colors.white,
-            selectedItemColor: Colors.red,
-            unselectedItemColor: Colors.red,
-            selectedFontSize: 11,
-            unselectedFontSize: 11,
-            iconSize: 23,
-            type: BottomNavigationBarType.fixed,
-            onTap: (value) {
-              if(value == 2){
-                return;
-              }
-              ref.read(bottomNavProvider.notifier).changePage(value);
-            },
-            currentIndex: currentIndex,
-            enableFeedback: true,
-            items: BottomNavPage.values.map((e) {
-              return BottomNavigationBarItem(
-                icon: currentIndex == e.index
-                    ? Icon(e.iconData)
-                        .animate()
-                        .scale(duration: 150.ms, begin: const Offset(0.9, 0.9))
-                    : Icon(e.iconData),
-                label: e.korean,
-              );
-            }).toList(),
-          ),
+        child: BottomNavigationBar(
+          backgroundColor: Colors.white,
+          selectedItemColor: Colors.red,
+          unselectedItemColor: Colors.red,
+          selectedFontSize: 11,
+          unselectedFontSize: 11,
+          iconSize: 23,
+          type: BottomNavigationBarType.fixed,
+          onTap: _goBranch,
+          currentIndex: currentIndex,
+          enableFeedback: true,
+          items: BottomNavPage.values.map((e) {
+            return BottomNavigationBarItem(
+              icon: currentIndex == e.navIndex
+                  ? Icon(e.iconData)
+                      .animate()
+                      .scale(duration: 150.ms, begin: const Offset(0.9, 0.9))
+                  : Icon(e.iconData),
+              label: e.korean,
+            );
+          }).toList(),
         ),
       ),
     );
   }
+
+  void _goBranch(int index){
+    if(index == 2){
+      return;
+    }
+    final shellIndex = index > 2 ? index - 1 : index;
+    navigationShell.goBranch(shellIndex,initialLocation: shellIndex == navigationShell.currentIndex);
+  }
 }
 
 enum BottomNavPage {
-  home('홈', Icons.home),
-  job('직업', Icons.work),
-  reservations('', Icons.calendar_today),
-  alarm('알림', Icons.notifications),
-  my('마이', Icons.person);
+  home('홈', Icons.home,0),
+  job('직업', Icons.work,1),
+  reservations('', Icons.calendar_today,-1),
+  alarm('알림', Icons.notifications,2),
+  my('마이', Icons.person,3);
 
   final String korean;
   final IconData iconData;
+  final int navIndex;
 
-  const BottomNavPage(this.korean, this.iconData);
+  const BottomNavPage(this.korean, this.iconData,this.navIndex);
 }
 
 

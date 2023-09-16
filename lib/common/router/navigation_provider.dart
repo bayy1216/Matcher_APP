@@ -2,10 +2,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../alarm/view/alarm_screen.dart';
+import '../../job/view/job_screen.dart';
 import '../../login/view/login_screen.dart';
 import '../../login/view/signup_screen.dart';
+import '../../my/view/my_screen.dart';
+import '../../reservation/view/resvervation_screen.dart';
 import '../view/root_tab.dart';
 import '../view/splash_screen.dart';
+
+final _shellReservationKey = GlobalKey<NavigatorState>(debugLabel: 'shellReservation');
+final _shellJobKey = GlobalKey<NavigatorState>(debugLabel: 'shellJob');
+final _shellAlarmKey = GlobalKey<NavigatorState>(debugLabel: 'shellAlarm');
+final _shellMyKey = GlobalKey<NavigatorState>(debugLabel: 'shellMy');
 
 final navigationProvider = ChangeNotifierProvider<NavigationNotifier>(
     (ref) => NavigationNotifier(ref: ref),
@@ -22,14 +31,95 @@ class NavigationNotifier extends ChangeNotifier {
     // });
   }
 
-  List<GoRoute> get routes => [
-        GoRoute(
-          path: '/',
-          name: RootTab.routeName,
-          builder: (context, state) => const RootTab(),
-          routes: [
-
-          ],
+  List<RouteBase> get routes => [
+        StatefulShellRoute.indexedStack(
+          builder: (context, state, navigationShell) {
+            return RootTab(
+                navigationShell: navigationShell,
+            );
+          },
+            branches: [
+              StatefulShellBranch(
+                navigatorKey: _shellReservationKey,
+                routes: [
+                  GoRoute(
+                    path: '/reservation',
+                    name: ReservationScreen.routeName,
+                    pageBuilder: (context, state) => const NoTransitionPage(
+                      child: ReservationScreen(),
+                    ),
+                    routes: [
+                      // child route
+                      // GoRoute(
+                      //   path: 'details',
+                      //   builder: (context, state) =>
+                      //   const DetailsScreen(label: 'A'),
+                      // ),
+                    ],
+                  ),
+                ],
+              ),
+              StatefulShellBranch(
+                navigatorKey: _shellJobKey,
+                routes: [
+                  GoRoute(
+                    path: '/job',
+                    name: JobScreen.routeName,
+                    pageBuilder: (context, state) => const NoTransitionPage(
+                      child: JobScreen(),
+                    ),
+                    routes: [
+                      // child route
+                      // GoRoute(
+                      //   path: 'details',
+                      //   builder: (context, state) =>
+                      //   const DetailsScreen(label: 'A'),
+                      // ),
+                    ],
+                  ),
+                ],
+              ),
+              StatefulShellBranch(
+                navigatorKey: _shellAlarmKey,
+                routes: [
+                  GoRoute(
+                    path: '/alarm',
+                    name: AlarmScreen.routeName,
+                    pageBuilder: (context, state) => const NoTransitionPage(
+                      child: AlarmScreen(),
+                    ),
+                    routes: [
+                      // child route
+                      // GoRoute(
+                      //   path: 'details',
+                      //   builder: (context, state) =>
+                      //   const DetailsScreen(label: 'A'),
+                      // ),
+                    ],
+                  ),
+                ],
+              ),
+              StatefulShellBranch(
+                navigatorKey: _shellMyKey,
+                routes: [
+                  GoRoute(
+                    path: '/my',
+                    name: MyScreen.routeName,
+                    pageBuilder: (context, state) => const NoTransitionPage(
+                      child: MyScreen(),
+                    ),
+                    routes: [
+                      // child route
+                      // GoRoute(
+                      //   path: 'details',
+                      //   builder: (context, state) =>
+                      //   const DetailsScreen(label: 'A'),
+                      // ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
         ),
         GoRoute(
           path: '/splash',

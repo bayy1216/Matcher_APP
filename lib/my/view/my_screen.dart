@@ -1,17 +1,20 @@
-import 'package:flutter/material.dart';
 
-class MyScreen extends StatelessWidget {
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+
+
+class MyScreen extends ConsumerWidget {
+  static String get routeName => 'my';
   const MyScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     print('MyScreen build');
     return SingleChildScrollView(
       child: Column(
-        children: [
-          Container(color: Colors.red, height: 600),
+        children : [
 
-          Container(color: Colors.yellow, height: 600),
         ],
       ),
     );
