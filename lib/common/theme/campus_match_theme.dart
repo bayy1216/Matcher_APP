@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../const/data.dart';
+
 class CampusMatchTheme{
   static const _lightFillColor = Colors.black;
   static const _darkFillColor = Colors.white;
@@ -27,6 +29,18 @@ class CampusMatchTheme{
       scaffoldBackgroundColor: colorScheme.background,
       highlightColor: Colors.transparent,
       focusColor: focusColor,
+      tabBarTheme: TabBarTheme(
+        labelColor: colorScheme.onPrimary,
+        unselectedLabelColor: colorScheme.onPrimary.withOpacity(0.5),
+      ),
+      buttonTheme: ButtonThemeData(
+        colorScheme: colorScheme,
+        textTheme: ButtonTextTheme.primary,
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
+        buttonColor: colorScheme.primary,
+        focusColor: focusColor,
+      ),
       snackBarTheme: SnackBarThemeData(
         behavior: SnackBarBehavior.floating,
         backgroundColor: Color.alphaBlend(
@@ -42,7 +56,7 @@ class CampusMatchTheme{
 
 
   static const ColorScheme lightColorScheme = ColorScheme(
-    primary: Color(0xFFB93C5D),
+    primary: defaultGreen,
     primaryContainer: Color(0xFF117378),
     secondary: Color(0xFFEFF3F3),
     secondaryContainer: Color(0xFFFAFBFB),
