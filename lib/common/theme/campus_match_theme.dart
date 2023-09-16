@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../const/data.dart';
+import '../const/color.dart';
 
 class CampusMatchTheme{
   static const _lightFillColor = Colors.black;
@@ -56,7 +56,7 @@ class CampusMatchTheme{
 
 
   static const ColorScheme lightColorScheme = ColorScheme(
-    primary: defaultGreen,
+    primary: DEFAULT_GREEN,
     primaryContainer: Color(0xFF117378),
     secondary: Color(0xFFEFF3F3),
     secondaryContainer: Color(0xFFFAFBFB),
