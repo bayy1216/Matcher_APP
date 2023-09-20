@@ -34,7 +34,7 @@ class JobScreen extends StatelessWidget {
               title: '종프 팀원 하실분을 찾습니다.',
               imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSK10NckXTTzmLQxJu6maCL_Z5SUTphEUjGvw&usqp=CAU',
               major: '컴퓨터학부',
-              studentNumber: '19',
+              studentNumber: 19,
               date: '2023-09-15 21:00',
             ),
           );

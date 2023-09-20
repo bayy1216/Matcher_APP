@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 import '../../common/component/image_box.dart';
 import '../../common/const/data.dart';
 import '../../common/const/text_style.dart';
+import '../../common/utils/data_utils.dart';
 
 class JobItem extends StatelessWidget {
   final String title;
   final String? imgUrl;
   final String major;
-  final String studentNumber;
+  final int studentNumber;
   final String date;
 
   const JobItem({
@@ -34,7 +35,7 @@ class JobItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(title,style: TITLE_MEDIUMN_STYLE,),
-                Expanded(child: Text('$major $studentNumber학번',style: CONTENT_SMALL_STYLE,),),
+                Expanded(child: Text(DataUtils.majorAndStudentNumber(major, studentNumber),style: CONTENT_SMALL_STYLE,),),
                 Text(date,style: CONTENT_SMALL_STYLE,),
               ],
             ),
