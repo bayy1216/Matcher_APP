@@ -1,3 +1,4 @@
 const ip = '';
 const ACCESS_TOKEN_KEY = 'ACCESS_TOKEN';
 const REFRESH_TOKEN_KEY = 'REFRESH_TOKEN';
+const DEFAULT_PADDING_H = 24.0;
