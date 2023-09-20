@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../common/const/color.dart';
 import '../../common/layout/default_layout.dart';
+import '../../common/view/root_tab.dart';
 import '../component/job_item.dart';
 
 class JobScreen extends StatelessWidget {
@@ -12,6 +14,15 @@ class JobScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultLayout(
+      title: BottomNavPage.job.korean,
+      actions: [
+        IconButton(
+          onPressed: () {},
+          icon: SvgPicture.asset(
+            'assets/icons/search.svg',
+          ),
+        ),
+      ],
       body: ListView.separated(
         itemCount: 10,
         itemBuilder: (context, index) {
