@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../alarm/view/alarm_screen.dart';
 import '../../job/view/job_detail_screen.dart';
 import '../../job/view/job_screen.dart';
+import '../../job/view/job_serach_screen.dart';
 import '../../login/view/login_screen.dart';
 import '../../login/view/signup_screen.dart';
 import '../../my/view/my_screen.dart';
@@ -71,6 +72,16 @@ class NavigationNotifier extends ChangeNotifier {
                       pageBuilder: (context, state){
                         return const NoTransitionPage(
                           child: JobDetailScreen(),
+                        );
+                      },
+                    ),
+                    GoRoute(
+                      path: 'job_search',
+                      name: JobSearchScreen.routeName,
+                      parentNavigatorKey: rootNavigatorKey,
+                      pageBuilder: (context, state){
+                        return const NoTransitionPage(
+                          child: JobSearchScreen(),
                         );
                       },
                     ),

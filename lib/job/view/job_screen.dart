@@ -7,6 +7,7 @@ import '../../common/layout/default_layout.dart';
 import '../../common/view/root_tab.dart';
 import '../component/job_item.dart';
 import 'job_detail_screen.dart';
+import 'job_serach_screen.dart';
 
 class JobScreen extends StatelessWidget {
   static String get routeName => 'job';
@@ -19,7 +20,9 @@ class JobScreen extends StatelessWidget {
       title: BottomNavPage.job.korean,
       actions: [
         IconButton(
-          onPressed: () {},
+          onPressed: () {
+            context.goNamed(JobSearchScreen.routeName);
+          },
           icon: SvgPicture.asset(
             'assets/icons/search.svg',
           ),
