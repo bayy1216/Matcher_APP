@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../const/text_style.dart';
+
 class DefaultLayout extends StatelessWidget {
   final Widget body;
   final Color? backgroundColor;
@@ -39,14 +41,12 @@ class DefaultLayout extends StatelessWidget {
     return AppBar(
       backgroundColor: Colors.white,
       elevation: elevation,
+      scrolledUnderElevation: 0,
       title: titleWidget ?? Text(
         title!,
-        style: TextStyle(
-          fontSize: 16.0,
-          fontWeight: FontWeight.w500,
-        ),
+        style: TITLE_MEDIUMN_STYLE,
       ),
-      centerTitle: true,
+      centerTitle: false,
       foregroundColor: Colors.black,
       actions: actions,
     );
