@@ -16,7 +16,7 @@ class ReservationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultLayout(
-      title: BottomNavPage.reservations.korean,
+      title: BottomNavPage.reservation.korean,
       actions: [
         IconButton(
           onPressed: () {

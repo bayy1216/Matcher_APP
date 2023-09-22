@@ -19,7 +19,7 @@ class ReservationSearchScreen extends ConsumerWidget {
     return DefaultLayout(
       title: '',
       titleWidget: SearchTextFormField(
-        hintText: '${BottomNavPage.reservations.korean} 검색',
+        hintText: '${BottomNavPage.reservation.korean} 검색',
         onSubmitted: (value) {
           ref.read(searchNotifierProvider(RESERVATION_SEARCH_KEY).notifier)
               .addHistory(value);
