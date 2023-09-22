@@ -34,7 +34,12 @@ class ReservationScreen extends StatelessWidget {
               onTap: () {
                 context.goNamed(ReservationDetailScreen.routeName);
               },
-              child: ReservationItem(),
+              child: ReservationItem(
+                title: 'GDSC 정기모임',
+                location: '복현회관',
+                date: '2021.10.10',
+                imgUrl: 'https://picsum.photos/200',
+              ),
             );
           },
           separatorBuilder: (context, index) {
