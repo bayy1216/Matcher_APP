@@ -24,6 +24,7 @@ class JobItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: Colors.transparent,
       height: 100,
       padding: const EdgeInsets.symmetric(horizontal: DEFAULT_WIDGET_PADDING),
       child: Row(
