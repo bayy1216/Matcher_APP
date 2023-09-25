@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../common/const/data.dart';
 import '../../common/layout/default_layout.dart';
-import '../../reservation/view/resvervation_screen.dart';
+import '../../reservation/view/reservation_screen.dart';
 
 class SignupScreen extends StatelessWidget {
   static String get routeName => 'signup';

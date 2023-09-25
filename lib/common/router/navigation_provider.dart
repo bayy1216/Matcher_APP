@@ -9,7 +9,9 @@ import '../../job/view/job_serach_screen.dart';
 import '../../login/view/login_screen.dart';
 import '../../login/view/signup_screen.dart';
 import '../../my/view/my_screen.dart';
-import '../../reservation/view/resvervation_screen.dart';
+import '../../reservation/view/reservation_detail_screen.dart';
+import '../../reservation/view/reservation_screen.dart';
+import '../../reservation/view/reservation_search_screen.dart';
 import '../view/root_tab.dart';
 import '../view/splash_screen.dart';
 import 'go_router.dart';
@@ -52,6 +54,28 @@ class NavigationNotifier extends ChangeNotifier {
                   pageBuilder: (context, state) => const NoTransitionPage(
                     child: ReservationScreen(),
                   ),
+                  routes: [
+                    GoRoute(
+                      path: 'reservation_detail',
+                      name: ReservationDetailScreen.routeName,
+                      parentNavigatorKey: rootNavigatorKey,
+                      pageBuilder: (context, state){
+                        return const NoTransitionPage(
+                          child: ReservationDetailScreen(),
+                        );
+                      },
+                    ),
+                    GoRoute(
+                      path: 'reservation_search',
+                      name: ReservationSearchScreen.routeName,
+                      parentNavigatorKey: rootNavigatorKey,
+                      pageBuilder: (context, state){
+                        return const NoTransitionPage(
+                          child: ReservationSearchScreen(),
+                        );
+                      },
+                    ),
+                  ],
                 ),
               ],
             ),

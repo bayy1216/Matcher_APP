@@ -9,19 +9,19 @@ import '../../common/layout/default_layout.dart';
 import '../../common/provider/search_provider.dart';
 import '../../common/view/root_tab.dart';
 
-class JobSearchScreen extends ConsumerWidget {
-  static String get routeName => 'job_search';
-  const JobSearchScreen({super.key});
+class ReservationSearchScreen extends ConsumerWidget {
+  static String get routeName => 'reservation_search';
+  const ReservationSearchScreen({super.key});
 
   @override
-  Widget build(BuildContext context,WidgetRef ref) {
-    final state = ref.watch(searchNotifierProvider(JOB_SEARCH_KEY));
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(searchNotifierProvider(RESERVATION_SEARCH_KEY));
     return DefaultLayout(
       title: '',
       titleWidget: SearchTextFormField(
-        hintText: '${BottomNavPage.job.korean} 검색',
+        hintText: '${BottomNavPage.reservation.korean} 검색',
         onSubmitted: (value) {
-          ref.read(searchNotifierProvider(JOB_SEARCH_KEY).notifier)
+          ref.read(searchNotifierProvider(RESERVATION_SEARCH_KEY).notifier)
               .addHistory(value);
           //TODO LOGIC
         },
@@ -37,7 +37,7 @@ class JobSearchScreen extends ConsumerWidget {
                 const Text('최근 검색',style: CONTENT_MEDIUMN_STYLE),
                 GestureDetector(
                   onTap: () {
-                    ref.read(searchNotifierProvider(JOB_SEARCH_KEY).notifier).removeAllHistory();
+                    ref.read(searchNotifierProvider(RESERVATION_SEARCH_KEY).notifier).removeAllHistory();
                   },
                   child: Text('전체 삭제',style: CONTENT_SMALL_STYLE),
                 ),
@@ -59,7 +59,7 @@ class JobSearchScreen extends ConsumerWidget {
                       return SearchItem(
                         keyword: data[index],
                         onTap: () {
-                          ref.read(searchNotifierProvider(JOB_SEARCH_KEY).notifier).removeHistory(data[index]);
+                          ref.read(searchNotifierProvider(RESERVATION_SEARCH_KEY).notifier).removeHistory(data[index]);
                         },
                       );
                     },

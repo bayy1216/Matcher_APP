@@ -64,9 +64,9 @@ class RootTab extends StatelessWidget {
 }
 
 enum BottomNavPage {
-  home('홈', Icons.home,0),
+  reservation('자리예약', Icons.home,0),
   job('구인구직', Icons.work,1),
-  reservations('', Icons.calendar_today,-1),
+  create('', Icons.calendar_today,-1),
   alarm('알림', Icons.notifications,2),
   my('마이', Icons.person,3);
 
