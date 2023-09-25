@@ -1,22 +1,22 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'page_pagination_model.dart';
+part of 'offset_pagination_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-PagePagination<T> _$PagePaginationFromJson<T>(
+OffsetPagination<T> _$OffsetPaginationFromJson<T>(
   Map<String, dynamic> json,
   T Function(Object? json) fromJsonT,
 ) =>
-    PagePagination<T>(
+    OffsetPagination<T>(
       hasNext: json['hasNext'] as bool,
       content: (json['content'] as List<dynamic>).map(fromJsonT).toList(),
     );
 
-Map<String, dynamic> _$PagePaginationToJson<T>(
-  PagePagination<T> instance,
+Map<String, dynamic> _$OffsetPaginationToJson<T>(
+  OffsetPagination<T> instance,
   Object? Function(T value) toJsonT,
 ) =>
     <String, dynamic>{

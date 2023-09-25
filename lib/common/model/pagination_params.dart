@@ -5,23 +5,23 @@ part 'pagination_params.g.dart';
 
 
 @JsonSerializable()
-class PaginationParams {
+class PaginationQueries {
   final int page;
 
-  const PaginationParams({
+  const PaginationQueries({
     required this.page,
   });
 
-  PaginationParams copyWith({
+  PaginationQueries copyWith({
     int? page,
   }) {
-    return PaginationParams(
+    return PaginationQueries(
       page: page ?? this.page,
     );
   }
 
-  factory PaginationParams.fromJson(Map<String, dynamic> json) =>
-      _$PaginationParamsFromJson(json);
+  factory PaginationQueries.fromJson(Map<String, dynamic> json) =>
+      _$PaginationQueriesFromJson(json);
 
-  Map<String, dynamic> toJson() => _$PaginationParamsToJson(this);
+  Map<String, dynamic> toJson() => _$PaginationQueriesToJson(this);
 }
