@@ -4,6 +4,8 @@ import 'package:two_dimensional_scrollables/two_dimensional_scrollables.dart';
 import '../../common/const/data.dart';
 import '../../common/const/text_style.dart';
 import '../../common/layout/default_layout.dart';
+import '../../common/utils/data_utils.dart';
+import '../model/seat_state_enum.dart';
 
 class ReservationDetailScreen extends StatelessWidget {
   static String get routeName => 'reservation_detail';
@@ -85,21 +87,22 @@ class TableExample extends StatefulWidget {
 
 class _TableExampleState extends State<TableExample> {
   late final ScrollController _verticalController = ScrollController();
-  int _rowCount = 20;
-  int _columnCount = 20;
-  List<bool> ary = List.generate(400, (index) => false);
+  final int rowCount = 29;
+  final int columnCount = 20;
+  late final int total =rowCount * columnCount;
+  late final List<bool> ary = List.generate(total, (index) => false);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.deepOrange,
+      color: Colors.black,
       child: TableView.builder(
         verticalDetails:
         ScrollableDetails.vertical(controller: _verticalController),
         cellBuilder: _buildCell,
-        columnCount: _columnCount,
+        columnCount: columnCount,
         columnBuilder: _buildColumnSpan,
-        rowCount: _rowCount,
+        rowCount: rowCount,
         rowBuilder: _buildRowSpan,
       ),
     );
@@ -108,18 +111,18 @@ class _TableExampleState extends State<TableExample> {
   Widget _buildCell(BuildContext context, TableVicinity vicinity) {
     final x = vicinity.column;
     final y = vicinity.row;
-    final isSelect = ary[x * 20 + y];
+    final isSelect = ary[x * columnCount + y];
     return GestureDetector(
       onTap: () {
         setState(() {
-          ary[x * 20 + y] = !isSelect;
+          ary[x * columnCount + y] = !isSelect;
         });
         print("$x, $y click!");
       },
-      child: Container(
-        margin: const EdgeInsets.all(4),
-        color: !isSelect ? Colors.green : Colors.white,
-        child: Center(child: Text('$x,$y')),
+      child: SeatItem(
+        row: y,
+        column: x,
+        seatState: isSelect ? SeatState.reserved : SeatState.available,
       ),
     );
   }
@@ -139,14 +142,24 @@ class _TableExampleState extends State<TableExample> {
 }
 
 class SeatItem extends StatelessWidget {
-  const SeatItem({super.key});
+  final int row;
+  final int column;
+  final SeatState seatState;
+  const SeatItem({
+    super.key,
+    required this.row,
+    required this.column,
+    required this.seatState,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: const EdgeInsets.all(4),
       width: 30,
       height: 30,
-      color: Colors.red,
+      color: seatState.color,
+      child: Center(child: Text(DataUtils.convertXYToAlphabet(row, column))),
     );
   }
 }
