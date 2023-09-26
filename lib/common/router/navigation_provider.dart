@@ -90,12 +90,12 @@ class NavigationNotifier extends ChangeNotifier {
                   ),
                   routes: [
                     GoRoute(
-                      path: 'job_detail',
+                      path: 'job_detail/:id',
                       name: JobDetailScreen.routeName,
                       parentNavigatorKey: rootNavigatorKey,
                       pageBuilder: (context, state){
-                        return const NoTransitionPage(
-                          child: JobDetailScreen(),
+                        return NoTransitionPage(
+                          child: JobDetailScreen(id: int.parse(state.pathParameters['id']!)),
                         );
                       },
                     ),

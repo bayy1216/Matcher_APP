@@ -36,6 +36,7 @@ class JobScreen extends StatelessWidget {
             onTap: () {
               context.goNamed(
                 JobDetailScreen.routeName,
+                pathParameters: {'id': model.id.toString()},
               );
             },
             child: JobItem.fromModel(model: model),
