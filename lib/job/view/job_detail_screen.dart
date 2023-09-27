@@ -1,39 +1,67 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../common/const/data.dart';
 import '../../common/const/text_style.dart';
 import '../../common/layout/default_layout.dart';
 import '../../common/utils/data_utils.dart';
+import '../model/job_detail_model.dart';
+import '../provider/job_provider.dart';
 
-class JobDetailScreen extends StatelessWidget {
+class JobDetailScreen extends ConsumerStatefulWidget {
   static String get routeName => 'job_detail';
+  final int id;
+
   const JobDetailScreen({
     super.key,
+    required this.id,
   });
 
   @override
+  ConsumerState<JobDetailScreen> createState() => _JobDetailScreenState();
+}
+
+class _JobDetailScreenState extends ConsumerState<JobDetailScreen> {
+  @override
+  void initState() {
+    super.initState();
+    ref.read(jobProvider.notifier).getDetailJob(id: widget.id);
+  }
+  @override
   Widget build(BuildContext context) {
+    final state = ref.watch(jobDetailProvider(widget.id));
+
+    if(state == null) {
+      return const DefaultLayout(
+        body: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
+
     return DefaultLayout(
       title: '',
       body: ListView(
         children: [
           _Writer(
-            writer: '홍길동',
-            date: '2023-09-15 21:00',
+            writer: (state is JobDetailModel) ? state.userName : null,
+            date: state.date.toString(),
             imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q='
                 'tbn:ANd9GcSK10NckXTTzmLQxJu6maCL_Z5SUTphEUjGvw&usqp=CAU',
-            major: '컴퓨터학부',
-            studentNumber: 19,
+            major: state.userMajor,
+            studentNumber: state.userStudentNumber,
           ),
           const SizedBox(height: 10),
           _Content(
-            title: '종프 팀원 하실분을 찾습니다.',
-            content: '화요일 5시 수업 성실하신분\n열심히 해서 A 받으실분 연락주세요',
+            title: state.title,
+            content: (state is JobDetailModel) ? state.content : null,
           ),
           const SizedBox(height: 30),
           Image.network(
-            'https://encrypted-tbn0.gstatic.com/images?q='
-                'tbn:ANd9GcSK10NckXTTzmLQxJu6maCL_Z5SUTphEUjGvw&usqp=CAU',
+            state.thumbnailUrl,
             fit: BoxFit.fill,
           ),
         ],
@@ -43,14 +71,15 @@ class JobDetailScreen extends StatelessWidget {
 }
 
 class _Writer extends StatelessWidget {
-  final String writer;
+  final String? writer;
   final String date;
   final String imgUrl;
   final String major;
   final int studentNumber;
+
   const _Writer({
     super.key,
-    required this.writer,
+    this.writer,
     required this.date,
     required this.imgUrl,
     required this.major,
@@ -60,7 +89,9 @@ class _Writer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: DEFAULT_PADDING_H,),
+      padding: const EdgeInsets.symmetric(
+        horizontal: DEFAULT_PADDING_H,
+      ),
       child: Row(
         children: [
           CircleAvatar(
@@ -69,24 +100,53 @@ class _Writer extends StatelessWidget {
               imgUrl,
             ),
           ),
-          const SizedBox(width: 10,),
+          const SizedBox(
+            width: 10,
+          ),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   children: [
-                    Text(writer, style: TITLE_MEDIUMN_STYLE,),
-                    const SizedBox(width: 10,),
-                    Text(DataUtils.majorAndStudentNumber(major, studentNumber), style: CONTENT_SMALL_STYLE,),
+                    if(writer == null) skeletonLoader()
+                    else
+                    Text(
+                      writer!,
+                      style: TITLE_MEDIUMN_STYLE,
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Text(
+                      DataUtils.majorAndStudentNumber(major, studentNumber),
+                      style: CONTENT_SMALL_STYLE,
+                    ),
                   ],
                 ),
-                Text(date, style: CONTENT_SMALL_STYLE,),
+                Text(
+                  date,
+                  style: CONTENT_SMALL_STYLE,
+                ),
               ],
             ),
           ),
-          IconButton(onPressed: (){}, icon: Icon(Icons.send))
+          IconButton(onPressed: () {}, icon: Icon(Icons.send))
         ],
+      ),
+    );
+  }
+
+  Widget skeletonLoader() {
+    return Shimmer.fromColors(
+      baseColor: Color.fromRGBO(240, 240, 240, 1),
+      highlightColor: Colors.white,
+      child: Container(
+        //color: Colors.grey,
+        child: const Text(
+          '익명',
+          style: TITLE_MEDIUMN_STYLE,
+        ),
       ),
     );
   }
@@ -94,26 +154,50 @@ class _Writer extends StatelessWidget {
 
 class _Content extends StatelessWidget {
   final String title;
-  final String content;
+  final String? content;
+
   const _Content({
     super.key,
     required this.title,
-    required this.content,
+    this.content,
   });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: DEFAULT_PADDING_H,),
+      padding: const EdgeInsets.symmetric(
+        horizontal: DEFAULT_PADDING_H,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title, style: TITLE_MEDIUMN_STYLE,),
+          Text(
+            title,
+            style: TITLE_MEDIUMN_STYLE,
+          ),
           const SizedBox(height: 10),
-          Text(content, style: CONTENT_SMALL_STYLE.copyWith(color: Colors.black)),
+          if(content ==null)
+            skeletonLoader()
+          else
+            Text(
+              content!,
+              style: CONTENT_SMALL_STYLE.copyWith(color: Colors.black),
+            ),
         ],
       ),
     );
   }
+  Widget skeletonLoader() {
+    return Shimmer.fromColors(
+      baseColor: Color.fromRGBO(240, 240, 240, 1),
+      highlightColor: Colors.white,
+      child: Container(
+        width: double.infinity,
+        height: 30,
+        decoration: BoxDecoration(
+          color: Colors.grey,
+        ),
+      ),
+    );
+  }
 }
-

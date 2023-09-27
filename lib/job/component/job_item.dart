@@ -4,6 +4,7 @@ import '../../common/component/image_box.dart';
 import '../../common/const/data.dart';
 import '../../common/const/text_style.dart';
 import '../../common/utils/data_utils.dart';
+import '../model/job_model.dart';
 
 class JobItem extends StatelessWidget {
   final String title;
@@ -20,6 +21,15 @@ class JobItem extends StatelessWidget {
     required this.studentNumber,
     required this.date,
   });
+  factory JobItem.fromModel({required JobModel model}) {
+    return JobItem(
+      title: model.title,
+      imgUrl: model.thumbnailUrl,
+      major: model.userMajor,
+      studentNumber: model.userStudentNumber,
+      date: model.date.toString(),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {

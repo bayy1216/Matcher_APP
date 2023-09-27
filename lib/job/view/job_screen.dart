@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../common/const/color.dart';
+import '../../common/component/pagination_list_view.dart';
 import '../../common/layout/default_layout.dart';
 import '../../common/view/root_tab.dart';
 import '../component/job_item.dart';
+import '../provider/job_provider.dart';
 import 'job_detail_screen.dart';
 import 'job_serach_screen.dart';
 
@@ -28,26 +29,19 @@ class JobScreen extends StatelessWidget {
           ),
         ),
       ],
-      body: ListView.separated(
-        itemCount: 10,
-        itemBuilder: (context, index) {
+      body: PaginationListView(
+        provider: jobProvider,
+        itemBuilder: (context, index, model) {
           return GestureDetector(
-            onTap: () => context.pushNamed(JobDetailScreen.routeName),
-            child: JobItem(
-              title: '종프 팀원 하실분을 찾습니다.',
-              imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSK10NckXTTzmLQxJu6maCL_Z5SUTphEUjGvw&usqp=CAU',
-              major: '컴퓨터학부',
-              studentNumber: 19,
-              date: '2023-09-15 21:00',
-            ),
+            onTap: () {
+              context.goNamed(
+                JobDetailScreen.routeName,
+                pathParameters: {'id': model.id.toString()},
+              );
+            },
+            child: JobItem.fromModel(model: model),
           );
         },
-        separatorBuilder: (context, index) {
-          return Divider(
-            color: DIVIDIER_GREY,
-            thickness: 0.5,
-          );
-        }
       ),
     );
   }
