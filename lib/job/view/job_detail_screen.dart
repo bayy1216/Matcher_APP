@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../common/const/data.dart';
 import '../../common/const/text_style.dart';
@@ -40,7 +41,6 @@ class _JobDetailScreenState extends ConsumerState<JobDetailScreen> {
         ),
       );
     }
-    log(state.toJson().toString());
 
     return DefaultLayout(
       title: '',
@@ -109,8 +109,10 @@ class _Writer extends StatelessWidget {
               children: [
                 Row(
                   children: [
+                    if(writer == null) skeletonLoader()
+                    else
                     Text(
-                      writer ?? '',
+                      writer!,
                       style: TITLE_MEDIUMN_STYLE,
                     ),
                     const SizedBox(
@@ -131,6 +133,20 @@ class _Writer extends StatelessWidget {
           ),
           IconButton(onPressed: () {}, icon: Icon(Icons.send))
         ],
+      ),
+    );
+  }
+
+  Widget skeletonLoader() {
+    return Shimmer.fromColors(
+      baseColor: Color.fromRGBO(240, 240, 240, 1),
+      highlightColor: Colors.white,
+      child: Container(
+        //color: Colors.grey,
+        child: const Text(
+          '익명',
+          style: TITLE_MEDIUMN_STYLE,
+        ),
       ),
     );
   }
@@ -160,9 +176,27 @@ class _Content extends StatelessWidget {
             style: TITLE_MEDIUMN_STYLE,
           ),
           const SizedBox(height: 10),
-          Text(content ?? '',
-              style: CONTENT_SMALL_STYLE.copyWith(color: Colors.black)),
+          if(content ==null)
+            skeletonLoader()
+          else
+            Text(
+              content!,
+              style: CONTENT_SMALL_STYLE.copyWith(color: Colors.black),
+            ),
         ],
+      ),
+    );
+  }
+  Widget skeletonLoader() {
+    return Shimmer.fromColors(
+      baseColor: Color.fromRGBO(240, 240, 240, 1),
+      highlightColor: Colors.white,
+      child: Container(
+        width: double.infinity,
+        height: 30,
+        decoration: BoxDecoration(
+          color: Colors.grey,
+        ),
       ),
     );
   }
