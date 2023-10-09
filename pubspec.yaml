@@ -48,6 +48,8 @@ dependencies:
   shared_preferences: ^2.2.1
   two_dimensional_scrollables: ^0.0.2
   shimmer: ^3.0.0
+  kakao_flutter_sdk_user: ^1.6.1 # 전체 추가
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -21,7 +21,13 @@ class SignupScreen extends StatelessWidget {
           children: [
             Text('회원정보를\n입력해 주세요'),
             TextButton(
-              onPressed: () {
+              onPressed: () async{
+                try {
+                  //OAuthToken token = await UserApi.instance.loginWithKakaoTalk();
+                  //print('카카오톡으로 로그인 성공 ${token.accessToken}');
+                } catch (error) {
+                  print('카카오톡으로 로그인 실패 $error');
+                }
                 context.goNamed(ReservationScreen.routeName);//로그인 함수로 나중에 변경
               },
               style: TextButton.styleFrom(
