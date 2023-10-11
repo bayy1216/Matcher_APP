@@ -44,7 +44,7 @@ class DefaultLayout extends StatelessWidget {
       scrolledUnderElevation: 0,
       title: titleWidget ?? Text(
         title!,
-        style: TITLE_MEDIUMN_STYLE,
+        style: TITLE_MEDIUMN2_STYLE,
       ),
       centerTitle: false,
       foregroundColor: Colors.black,

@@ -113,7 +113,7 @@ class _Writer extends StatelessWidget {
                     else
                     Text(
                       writer!,
-                      style: TITLE_MEDIUMN_STYLE,
+                      style: TITLE_MEDIUMN2_STYLE,
                     ),
                     const SizedBox(
                       width: 10,
@@ -143,9 +143,9 @@ class _Writer extends StatelessWidget {
       highlightColor: Colors.white,
       child: Container(
         //color: Colors.grey,
-        child: const Text(
+        child: Text(
           '익명',
-          style: TITLE_MEDIUMN_STYLE,
+          style: TITLE_MEDIUMN2_STYLE,
         ),
       ),
     );
@@ -173,7 +173,7 @@ class _Content extends StatelessWidget {
         children: [
           Text(
             title,
-            style: TITLE_MEDIUMN_STYLE,
+            style: TITLE_MEDIUMN2_STYLE,
           ),
           const SizedBox(height: 10),
           if(content ==null)

@@ -2,16 +2,32 @@ import 'package:flutter/material.dart';
 
 import 'color.dart';
 
-const TITLE_MEDIUMN_STYLE = TextStyle(
+const TITLE_LARGE1_STYLE = TextStyle(
+  fontSize: 20,
+  fontWeight: FontWeight.w600,
+  color: Colors.black,
+);
+final TITLE_LARGE2_STYLE = TITLE_MEDIUMN1_STYLE.copyWith(
   fontSize: 18,
+);
+
+const TITLE_MEDIUMN1_STYLE = TextStyle(
+  fontSize: 20,
   fontWeight: FontWeight.w500,
   color: Colors.black,
+);
+final TITLE_MEDIUMN2_STYLE = TITLE_MEDIUMN1_STYLE.copyWith(
+  fontSize: 18,
 );
 
 const CONTENT_MEDIUMN_STYLE = TextStyle(
   fontSize: 18,
   fontWeight: FontWeight.w400,
   color: Colors.black,
+);
+
+final CONTENT_MEDIUMN2_STYLE = CONTENT_MEDIUMN_STYLE.copyWith(
+  fontSize: 16,
 );
 
 const CONTENT_SMALL_STYLE = TextStyle(
