@@ -153,7 +153,7 @@ class _NativeSignupInput extends StatelessWidget {
         const SizedBox(height: 4),
         LoginTextFormField(
           hintText: '비밀번호를 입력해주세요',
-
+          isObscure: true,
           textInputAction: TextInputAction.done,
           validator: (value) {
             if (value!.isEmpty) {
