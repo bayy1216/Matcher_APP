@@ -4,7 +4,9 @@ import 'package:go_router/go_router.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 
 import '../../common/const/data.dart';
+import '../../common/const/text_style.dart';
 import '../../common/layout/default_layout.dart';
+import 'native_login_screen.dart';
 import 'signup_screen.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -27,8 +29,7 @@ class LoginScreen extends StatelessWidget {
           const SizedBox(height: 250),
           GestureDetector(
             onTap: () async{
-              // 카카오톡 설치 여부 확인
-// 카카오톡이 설치되어 있으면 카카오톡으로 로그인, 아니면 카카오계정으로 로그인
+              // 카카오톡 설치 여부 확인// 카카오톡이 설치되어 있으면 카카오톡으로 로그인, 아니면 카카오계정으로 로그인
               if (await isKakaoTalkInstalled()) {
                 try {
                   await UserApi.instance.loginWithKakaoTalk();
@@ -68,10 +69,6 @@ class LoginScreen extends StatelessWidget {
                   context.goNamed(SignupScreen.routeName,queryParameters: {
                     'id' : user.id.toString(),
                   },);
-                  print('사용자 정보 요청 성공'
-                      '\n회원번호: ${user.id}'
-                      '\n닉네임: ${user.kakaoAccount?.profile?.nickname}'
-                      '\n이메일: ${user.kakaoAccount?.email}');
                   print('카카오계정으로 로그인 성공');
                 } catch (error) {
                   print('카카오계정으로 로그인 실패 $error');
@@ -86,6 +83,36 @@ class LoginScreen extends StatelessWidget {
               color: Colors.yellow,
               child: Text('카카오 로그인'),
             ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              GestureDetector(
+                onTap: () {
+                  context.goNamed(NativeLoginScreen.routeName);
+                },
+                child: Container(
+                  alignment: Alignment.center,
+                  margin: const EdgeInsets.symmetric(horizontal: DEFAULT_PADDING_H),
+                  height: 47,
+                  child: const Text('이메일 로그인', style: CONTENT_SMALL_STYLE),
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  context.goNamed(
+                    SignupScreen.routeName,
+                    queryParameters: {'native_signup': '1'},
+                  );
+                },
+                child: Container(
+                  alignment: Alignment.center,
+                  margin: const EdgeInsets.symmetric(horizontal: DEFAULT_PADDING_H),
+                  height: 47,
+                  child: const Text('회원가입', style: CONTENT_SMALL_STYLE),
+                ),
+              ),
+            ],
           ),
         ],
       ),

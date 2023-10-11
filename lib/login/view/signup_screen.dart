@@ -7,8 +7,12 @@ import '../../reservation/view/reservation_screen.dart';
 
 class SignupScreen extends StatelessWidget {
   static String get routeName => 'signup';
+  final bool isNativeSignup;
 
-  const SignupScreen({super.key});
+  const SignupScreen({
+    super.key,
+    required this.isNativeSignup,
+  });
 
   @override
   Widget build(BuildContext context) {

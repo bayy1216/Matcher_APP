@@ -7,6 +7,7 @@ import '../../job/view/job_detail_screen.dart';
 import '../../job/view/job_screen.dart';
 import '../../job/view/job_serach_screen.dart';
 import '../../login/view/login_screen.dart';
+import '../../login/view/native_login_screen.dart';
 import '../../login/view/signup_screen.dart';
 import '../../my/view/my_screen.dart';
 import '../../reservation/view/reservation_detail_screen.dart';
@@ -152,7 +153,19 @@ class NavigationNotifier extends ChangeNotifier {
             GoRoute(
               path: 'signup',
               name: SignupScreen.routeName,
-              builder: (context, state) => const SignupScreen(),
+              builder: (context, state){
+                final isNativeSignup = state.uri.queryParameters['native_signup'] == '1';
+                return SignupScreen(
+                  isNativeSignup: isNativeSignup,
+                );
+              },
+            ),
+            GoRoute(
+              path: 'native_login',
+              name: NativeLoginScreen.routeName,
+              builder: (context, state){
+                return const NativeLoginScreen();
+              },
             ),
           ],
         ),
