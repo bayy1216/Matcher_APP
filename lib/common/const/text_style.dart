@@ -14,6 +14,10 @@ const CONTENT_MEDIUMN_STYLE = TextStyle(
   color: Colors.black,
 );
 
+final CONTENT_MEDIUMN2_STYLE = CONTENT_MEDIUMN_STYLE.copyWith(
+  fontSize: 16,
+);
+
 const CONTENT_SMALL_STYLE = TextStyle(
   fontSize: 14,
   fontWeight: FontWeight.w400,

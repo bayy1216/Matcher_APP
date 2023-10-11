@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../const/color.dart';
+import '../const/data.dart';
+import '../const/text_style.dart';
 
 class CampusMatchTheme{
   static const _lightFillColor = Colors.black;
@@ -40,6 +42,28 @@ class CampusMatchTheme{
         highlightColor: Colors.transparent,
         buttonColor: colorScheme.primary,
         focusColor: focusColor,
+      ),
+      textButtonTheme: TextButtonThemeData(
+        style: ButtonStyle(
+
+          backgroundColor: MaterialStateProperty.resolveWith((states) {
+              if (states.contains(MaterialState.pressed)) {
+                return Colors.grey;
+              }
+              else if(states.contains(MaterialState.disabled)){
+                return Colors.grey;
+              }
+              return DEFAULT_GREEN;
+
+            },
+          ),
+          shape: MaterialStateProperty.all(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+          ),
+          fixedSize: MaterialStateProperty.all(const Size(double.infinity, BUTTON_HEIGHT)),
+        ),
       ),
       snackBarTheme: SnackBarThemeData(
         behavior: SnackBarBehavior.floating,
