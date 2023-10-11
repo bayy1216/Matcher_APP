@@ -61,7 +61,7 @@ class _Content extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title, style: TITLE_MEDIUMN_STYLE.copyWith(height: 0.8)),
+          Text(title, style: TITLE_MEDIUMN2_STYLE.copyWith(height: 0.8)),
           Text(date, style: CONTENT_SMALL_STYLE),
           const SizedBox(height: 20),
           Text(

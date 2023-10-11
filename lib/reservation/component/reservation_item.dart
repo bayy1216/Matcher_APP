@@ -32,7 +32,7 @@ class ReservationItem extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(title, style: TITLE_MEDIUMN_STYLE),
+                Text(title, style: TITLE_MEDIUMN2_STYLE),
                 Expanded(
                   child: Text(location, style: CONTENT_SMALL_STYLE),
                 ),
