@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../common/const/data.dart';
 import '../../common/const/text_style.dart';
 import '../../common/layout/default_layout.dart';
-import '../../reservation/view/reservation_screen.dart';
 import '../component/login_text_form_field.dart';
+import '../model/user_model.dart';
 import '../provider/user_provider.dart';
 
 class NativeLoginScreen extends ConsumerWidget {
@@ -69,9 +68,11 @@ class NativeLoginScreen extends ConsumerWidget {
               ),
               const SizedBox(height: 10),
               TextButton(
-                onPressed: () async {
+                onPressed: (ref.read(userProvider) == UserModelLoading())
+                    ? null
+                    : ()async{
                   if (formKey.currentState!.validate()) {
-                    ref.read(userProvider.notifier).emailLogin(
+                    await ref.read(userProvider.notifier).emailLogin(
                       email: emailController.text,
                       password: passwordController.text,
                     );

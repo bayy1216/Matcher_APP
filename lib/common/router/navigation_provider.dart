@@ -11,12 +11,12 @@ import '../../login/provider/user_provider.dart';
 import '../../login/view/login_screen.dart';
 import '../../login/view/native_login_screen.dart';
 import '../../login/view/signup_screen.dart';
+import '../../login/view/splash_screen.dart';
 import '../../my/view/my_screen.dart';
 import '../../reservation/view/reservation_detail_screen.dart';
 import '../../reservation/view/reservation_screen.dart';
 import '../../reservation/view/reservation_search_screen.dart';
 import '../view/root_tab.dart';
-import '../view/splash_screen.dart';
 import 'go_router.dart';
 
 final _shellReservationKey =
@@ -188,12 +188,14 @@ class NavigationNotifier extends ChangeNotifier {
       //유저정보 있을시
       //로그인 중이거나, 현재위치가 첫화면일경우 홈으로 가게한다
       case UserModel():
-        return isTryLogin || state.fullPath == '/login' ? '/reservation' : null;
+        return isTryLogin || state.fullPath == '/splash' ? '/reservation' : null;
 
       //오류 발생시 로그인 화면으로
       case UserModelError():
         return isTryLogin ? null : '/login';
 
+      case UserModelLoading():
+        return null;
     }
   }
 }

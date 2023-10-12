@@ -17,7 +17,7 @@ class UserStateNotifier extends StateNotifier<UserModelBase?> {
   final FlutterSecureStorage storage;
   UserStateNotifier({
     required this.storage,
-  }) : super(null){
+  }) : super(UserModelLoading()){
     getMe();
   }
   Future<void> getMe() async {
@@ -31,14 +31,15 @@ class UserStateNotifier extends StateNotifier<UserModelBase?> {
     state = UserModel();
   }
 
-  void emailLogin({
+  emailLogin ({
     required String email,
     required String password,
-  }){
+  })async{
     try{
-      state = UserModel();
+      state = UserModelLoading();
       final resp = LoginResponse(accessToken: 'accessToken', refreshToken: 'refreshToken');
       _saveTokenKey(response: resp);
+      state = UserModel();
     }catch(e){
       state = UserModelError(message: '로그인에 실패했습니다.');
     }
