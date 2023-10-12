@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../common/const/data.dart';
@@ -6,14 +7,15 @@ import '../../common/const/text_style.dart';
 import '../../common/layout/default_layout.dart';
 import '../../reservation/view/reservation_screen.dart';
 import '../component/login_text_form_field.dart';
+import '../provider/user_provider.dart';
 
-class NativeLoginScreen extends StatelessWidget {
+class NativeLoginScreen extends ConsumerWidget {
   static String get routeName => 'native_login';
 
   const NativeLoginScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final GlobalKey<FormState> formKey = GlobalKey<FormState>();
     final TextEditingController emailController = TextEditingController();
     final TextEditingController passwordController = TextEditingController();
@@ -58,7 +60,10 @@ class NativeLoginScreen extends StatelessWidget {
                 },
                 onFieldSubmitted: (_) {
                   if (formKey.currentState!.validate()) {
-                    context.goNamed(ReservationScreen.routeName);
+                    ref.read(userProvider.notifier).emailLogin(
+                      email: emailController.text,
+                      password: passwordController.text,
+                    );
                   }
                 },
               ),
@@ -66,9 +71,10 @@ class NativeLoginScreen extends StatelessWidget {
               TextButton(
                 onPressed: () async {
                   if (formKey.currentState!.validate()) {
-                    context
-                        .goNamed(ReservationScreen.routeName); //로그인 함수로 나중에 변경
-                    //ref.read(userProvider.notifier).login();
+                    ref.read(userProvider.notifier).emailLogin(
+                      email: emailController.text,
+                      password: passwordController.text,
+                    );
                   }
                 },
                 child: Text(
