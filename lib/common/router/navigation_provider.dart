@@ -6,6 +6,8 @@ import '../../alarm/view/alarm_screen.dart';
 import '../../job/view/job_detail_screen.dart';
 import '../../job/view/job_screen.dart';
 import '../../job/view/job_serach_screen.dart';
+import '../../login/model/user_model.dart';
+import '../../login/provider/user_provider.dart';
 import '../../login/view/login_screen.dart';
 import '../../login/view/native_login_screen.dart';
 import '../../login/view/signup_screen.dart';
@@ -31,11 +33,11 @@ class NavigationNotifier extends ChangeNotifier {
   final Ref ref;
 
   NavigationNotifier({required this.ref}) {
-    // ref.listen(userProvider, (previous, next) {
-    //   if (previous != next) {
-    //     notifyListeners();
-    //   }
-    // });
+    ref.listen(userProvider, (previous, next) {
+      if (previous != next) {
+        notifyListeners();
+      }
+    });
   }
 
   List<RouteBase> get routes => [
@@ -171,7 +173,27 @@ class NavigationNotifier extends ChangeNotifier {
         ),
       ];
 
+  //로그인 상태에 따라 리다이렉트
+  //유저 상태 변경시 notifyListeners에 의해 발동
   String? redirectLogic(BuildContext context, GoRouterState state) {
-    return null;
+    final user = ref.read(userProvider);
+
+    final isTryLogin = state.fullPath == '/login' || state.fullPath == '/login/signup' || state.fullPath == '/login/native_login';
+    switch(user){
+      //유저정보 없을시,
+      //로그인중이면 그대로, 아니면 로그인 화면으로 가게한다.
+      case null:
+        return isTryLogin ? null : '/login';
+
+      //유저정보 있을시
+      //로그인 중이거나, 현재위치가 첫화면일경우 홈으로 가게한다
+      case UserModel():
+        return isTryLogin || state.fullPath == '/login' ? '/reservation' : null;
+
+      //오류 발생시 로그인 화면으로
+      case UserModelError():
+        return isTryLogin ? null : '/login';
+
+    }
   }
 }
