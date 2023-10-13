@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../component/opensource_item.dart';
-import '../layout/default_layout.dart';
+import '../../common/layout/default_layout.dart';
 import '../model/package.dart';
 
 class OpensourceScreen extends StatefulWidget {
@@ -26,7 +26,7 @@ class _OpensourceScreenState extends State<OpensourceScreen> {
   }
 
   Future<String> getJsonString(String filePath) async {
-    return await rootBundle.loadString('asset/$filePath');
+    return await rootBundle.loadString('assets/$filePath');
   }
 
   T _tryConverting<T>(Map<String,dynamic> json) {
@@ -34,6 +34,7 @@ class _OpensourceScreenState extends State<OpensourceScreen> {
       case Package:
         return Package.fromJson(json) as T;
       default:
+        print('Please check _tryConverting method');
         throw Exception("Please check _tryConverting method");
     }
   }
@@ -41,7 +42,7 @@ class _OpensourceScreenState extends State<OpensourceScreen> {
   Future<List<T>> getObjectList<T>(String filePath) async {
     final string = await getJsonString(filePath);
     final json = jsonDecode(string);
-    if (json is List<T>) {
+    if (json is List) {
       return json.map<T>((e) => _tryConverting(e as Map<String, dynamic>)).toList();
     }
     return [];

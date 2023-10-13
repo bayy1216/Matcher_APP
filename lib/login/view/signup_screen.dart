@@ -34,7 +34,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
           key: formKey,
           child: ListView(
             children: [
-              const Text('회원정보를\n입력해 주세요', style: TITLE_LARGE1_STYLE),
+              Text('회원정보를\n입력해 주세요', style: TITLE_LARGE1_STYLE),
               const SizedBox(height: 30),
               if (widget.isNativeSignup)
                 _NativeSignupInput(),
