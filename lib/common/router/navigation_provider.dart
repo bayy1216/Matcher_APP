@@ -13,6 +13,8 @@ import '../../login/view/native_login_screen.dart';
 import '../../login/view/signup_screen.dart';
 import '../../login/view/splash_screen.dart';
 import '../../my/view/my_screen.dart';
+import '../../my/view/open_source_screen.dart';
+import '../../my/view/setting_screen.dart';
 import '../../reservation/view/reservation_detail_screen.dart';
 import '../../reservation/view/reservation_screen.dart';
 import '../../reservation/view/reservation_search_screen.dart';
@@ -137,6 +139,22 @@ class NavigationNotifier extends ChangeNotifier {
                   pageBuilder: (context, state) => const NoTransitionPage(
                     child: MyScreen(),
                   ),
+                  routes: [
+                    GoRoute(
+                      parentNavigatorKey: rootNavigatorKey,
+                      path: 'setting',
+                      name: SettingScreen.routeName,
+                      builder: (context, state) => const SettingScreen(),
+                      routes: [
+                        GoRoute(
+                          parentNavigatorKey: rootNavigatorKey,
+                          path: 'opensource',
+                          name: OpensourceScreen.routeName,
+                          builder: (context, state) => const OpensourceScreen(),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ],
             ),
