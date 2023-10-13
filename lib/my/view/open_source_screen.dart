@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../component/opensource_item.dart';
-import '../layout/default_layout.dart';
+import '../../common/layout/default_layout.dart';
 import '../model/package.dart';
 
 class OpensourceScreen extends StatefulWidget {
