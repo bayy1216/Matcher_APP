@@ -19,7 +19,7 @@ class MyScreen extends ConsumerWidget {
           onPressed: () {
             context.goNamed(SettingScreen.routeName);
           },
-          icon: const Icon(Icons.settings),
+          icon: const Icon(Icons.settings, color: Colors.black),
         ),],
       body: SingleChildScrollView(
         child: Column(
