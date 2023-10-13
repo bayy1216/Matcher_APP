@@ -95,7 +95,7 @@ class LoginScreen extends StatelessWidget {
                   alignment: Alignment.center,
                   margin: const EdgeInsets.symmetric(horizontal: DEFAULT_PADDING_H),
                   height: 47,
-                  child: const Text('이메일 로그인', style: CONTENT_SMALL_STYLE),
+                  child: Text('이메일 로그인', style: CONTENT_SMALL_STYLE),
                 ),
               ),
               GestureDetector(
@@ -109,7 +109,7 @@ class LoginScreen extends StatelessWidget {
                   alignment: Alignment.center,
                   margin: const EdgeInsets.symmetric(horizontal: DEFAULT_PADDING_H),
                   height: 47,
-                  child: const Text('회원가입', style: CONTENT_SMALL_STYLE),
+                  child: Text('회원가입', style: CONTENT_SMALL_STYLE),
                 ),
               ),
             ],

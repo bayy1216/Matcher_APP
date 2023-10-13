@@ -34,7 +34,7 @@ class JobSearchScreen extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                const Text('최근 검색',style: CONTENT_MEDIUMN_STYLE),
+                Text('최근 검색',style: CONTENT_MEDIUMN_STYLE),
                 GestureDetector(
                   onTap: () {
                     ref.read(searchNotifierProvider(JOB_SEARCH_KEY).notifier).removeAllHistory();

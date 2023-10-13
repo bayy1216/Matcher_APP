@@ -27,7 +27,7 @@ class NativeLoginScreen extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const Text('이메일 로그인', style: TITLE_LARGE1_STYLE),
+              Text('이메일 로그인', style: TITLE_LARGE1_STYLE),
               const SizedBox(height: 30),
               LoginTextFormField(
                 hintText: '이메일을 입력해주세요',
