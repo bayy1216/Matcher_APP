@@ -50,6 +50,7 @@ dependencies:
   shimmer: ^3.0.0
   kakao_flutter_sdk_user: ^1.6.1 # 전체 추가
   google_fonts: ^6.1.0
+  package_info_plus: ^4.1.0
 
 dev_dependencies:
   flutter_test:

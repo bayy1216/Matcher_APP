@@ -20,6 +20,9 @@ final TITLE_MEDIUMN1_STYLE = GoogleFonts.inter(
 final TITLE_MEDIUMN2_STYLE = TITLE_MEDIUMN1_STYLE.copyWith(
   fontSize: 18,
 );
+final TITLE_SAMLL_STYLE = TITLE_MEDIUMN1_STYLE.copyWith(
+  fontSize: 16,
+);
 
 final CONTENT_MEDIUMN_STYLE = GoogleFonts.inter(
   fontSize: 18,
