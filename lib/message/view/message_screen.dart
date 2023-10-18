@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 
 import '../../common/layout/default_layout.dart';
 
-class AlarmScreen extends StatefulWidget {
-  static String get routeName => 'alarm';
+class MessageScreen extends StatefulWidget {
+  static String get routeName => 'message';
 
-  const AlarmScreen({super.key});
+  const MessageScreen({super.key});
 
   @override
-  State<AlarmScreen> createState() => _AlarmScreenState();
+  State<MessageScreen> createState() => _MessageScreenState();
 }
 
-class _AlarmScreenState extends State<AlarmScreen>
+class _MessageScreenState extends State<MessageScreen>
     with SingleTickerProviderStateMixin {
   late final TabController _controller;
 
