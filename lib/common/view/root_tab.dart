@@ -67,7 +67,7 @@ enum BottomNavPage {
   reservation('자리예약', Icons.home,0),
   job('구인구직', Icons.work,1),
   create('', Icons.calendar_today,-1),
-  alarm('알림', Icons.notifications,2),
+  message('메시지', Icons.notifications,2),
   my('마이', Icons.person,3);
 
   final String korean;
