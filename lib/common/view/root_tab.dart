@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 
+import '../const/color.dart';
 import '../layout/default_layout.dart';
 
 class RootTab extends StatelessWidget {
@@ -17,7 +19,7 @@ class RootTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final index = navigationShell.currentIndex;
-    final currentIndex = index > 2 ? index + 1 : index;
+    final currentIndex = index >= 2 ? index + 1 : index;
     return DefaultLayout(
       body: SafeArea(
         child: navigationShell,
@@ -30,8 +32,8 @@ class RootTab extends StatelessWidget {
         ),
         child: BottomNavigationBar(
           backgroundColor: Colors.white,
-          selectedItemColor: Colors.red,
-          unselectedItemColor: Colors.red,
+          selectedItemColor: DEFAULT_GREEN,
+          unselectedItemColor: TEXT_GREY,
           selectedFontSize: 11,
           unselectedFontSize: 11,
           iconSize: 23,
@@ -41,11 +43,11 @@ class RootTab extends StatelessWidget {
           enableFeedback: true,
           items: BottomNavPage.values.map((e) {
             return BottomNavigationBarItem(
-              icon: currentIndex == e.navIndex
-                  ? Icon(e.iconData)
-                      .animate()
-                      .scale(duration: 150.ms, begin: const Offset(0.9, 0.9))
-                  : Icon(e.iconData),
+              icon: currentIndex == e.index
+                  ? e.getIcon(true)
+                  .animate()
+                  .scale(duration: 150.ms, begin: const Offset(0.9, 0.9))
+                  : e.getIcon(false),
               label: e.korean,
             );
           }).toList(),
@@ -54,27 +56,39 @@ class RootTab extends StatelessWidget {
     );
   }
 
-  void _goBranch(int index){
-    if(index == 2){
+  void _goBranch(int index) {
+    if (index == 2) {
       return;
     }
     final shellIndex = index > 2 ? index - 1 : index;
-    navigationShell.goBranch(shellIndex,initialLocation: shellIndex == navigationShell.currentIndex);
+    navigationShell.goBranch(shellIndex,
+        initialLocation: shellIndex == navigationShell.currentIndex);
   }
 }
 
 enum BottomNavPage {
-  reservation('자리예약', Icons.home,0),
-  job('구인구직', Icons.work,1),
-  create('', Icons.calendar_today,-1),
-  message('메시지', Icons.notifications,2),
-  my('마이', Icons.person,3);
+  reservation('자리예약', Icons.home),
+  job('구인구직', Icons.work),
+  create('', Icons.calendar_today),
+  message('메시지', Icons.notifications),
+  my('마이', Icons.person);
 
   final String korean;
   final IconData iconData;
-  final int navIndex;
 
-  const BottomNavPage(this.korean, this.iconData,this.navIndex);
+  SvgPicture getIcon(bool isGreen) {
+    //Color color = isGreen ? ColorPalette.PRIMARY_RED : const Color(0xff818181);
+    return SvgPicture.asset(
+      'assets/icons/$name.svg',
+      colorFilter: isGreen ? const ColorFilter.mode(
+          DEFAULT_GREEN, BlendMode.srcIn) : const ColorFilter.mode(
+          Color(0xff818181), BlendMode.srcIn),
+      // width: 21,
+      // colorFilter: ColorFilter.mode(DEFAULT_GREEN, BlendMode.srcIn),
+    );
+  }
+
+  const BottomNavPage(this.korean, this.iconData);
 }
 
 
