@@ -6,10 +6,14 @@ import '../const/color.dart';
 class SearchTextFormField extends StatelessWidget {
   final String hintText;
   final Function(String)? onSubmitted;
+  final TextEditingController? controller;
+  final FocusNode? focusNode;
   const SearchTextFormField({
     super.key,
     required this.hintText,
     required this.onSubmitted,
+    this.controller,
+    this.focusNode,
   });
 
   @override
@@ -21,6 +25,8 @@ class SearchTextFormField extends StatelessWidget {
       ),
       child: Center(
         child: TextField(
+          focusNode: focusNode,
+          controller: controller,
           decoration: InputDecoration(
             isDense: true,
             contentPadding: EdgeInsets.all(10),
