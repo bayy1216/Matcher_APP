@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../message/view/message_detail_screen.dart';
 import '../../message/view/message_screen.dart';
 import '../../job/view/job_detail_screen.dart';
 import '../../job/view/job_screen.dart';
@@ -127,6 +128,19 @@ class NavigationNotifier extends ChangeNotifier {
                   pageBuilder: (context, state) => const NoTransitionPage(
                     child: MessageScreen(),
                   ),
+                  routes: [
+                    GoRoute(
+                      path: 'message_detail/:id',
+                      name: MessageDetailScreen.routeName,
+                      parentNavigatorKey: rootNavigatorKey,
+                      pageBuilder: (context, state){
+                        final id = int.parse(state.pathParameters['id']!);
+                        return NoTransitionPage(
+                          child: MessageDetailScreen(id: id),
+                        );
+                      },
+                    ),
+                  ],
                 ),
               ],
             ),
