@@ -3,19 +3,24 @@ import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../repository/prefs_history_repository.dart';
+
 final searchNotifierProvider = AsyncNotifierProvider.autoDispose
     .family<SearchNotifier, List<String>, String>(SearchNotifier.new);
 
 class SearchNotifier
     extends AutoDisposeFamilyAsyncNotifier<List<String>, String> {
-  late final SharedPreferences _prefs;
+  late final PrefsHistoryRepository _repository;
   late final String _prefsKey;
 
   @override
   FutureOr<List<String>> build(String arg) async {
     _prefsKey = arg;
-    _prefs = await SharedPreferences.getInstance();
-    return _prefs.getStringList(arg) ?? [];
+    _repository = PrefsHistoryRepository(
+      prefsKey: _prefsKey,
+      prefs: await SharedPreferences.getInstance(),
+    );
+    return _repository.getHistory();
   }
 
   addHistory(String keyword) async {
@@ -24,22 +29,18 @@ class SearchNotifier
       keyword,
       ...?state.value,
     ];
-    final history = _prefs.getStringList(_prefsKey) ?? [];
-    final pHistory = [keyword, ...history];
-    _prefs.setStringList(_prefsKey, pHistory);
+    _repository.setHistory(history: pState);
     state = AsyncData(pState);
   }
 
   removeHistory(String keyword) async {
     final pState = state.value!.where((element) => element != keyword).toList();
-    final history = _prefs.getStringList(_prefsKey) ?? [];
-    history.remove(keyword);
-    _prefs.setStringList(_prefsKey, history);
+    _repository.setHistory(history: pState);
     state = AsyncData(pState);
   }
 
   removeAllHistory() async {
-    _prefs.setStringList(_prefsKey, []);
+    _repository.setHistory(history: []);
     state = const AsyncData([]);
   }
 }
