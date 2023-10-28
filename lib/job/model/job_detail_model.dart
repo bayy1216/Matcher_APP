@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import 'comment_model.dart';
 import 'job_model.dart';
 
 part 'job_detail_model.g.dart';
@@ -10,6 +11,7 @@ class JobDetailModel extends JobModel{
   final String userName;
   final String content;
   final List<String> imageUrl;
+  final List<CommentModel> comments;
 
   JobDetailModel({
     required super.id,
@@ -22,6 +24,7 @@ class JobDetailModel extends JobModel{
     required this.imageUrl,
     required super.userStudentNumber,
     required super.thumbnailUrl,
+    required this.comments,
   });
 
   factory JobDetailModel.fromJson(Map<String, dynamic> json) => _$JobDetailModelFromJson(json);

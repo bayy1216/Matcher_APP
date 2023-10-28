@@ -108,7 +108,7 @@ class FakeDioClient implements DioClient {
           'https://picsum.photos/200/300',
           'https://picsum.photos/200/300',
           'https://picsum.photos/200/300',
-        ],
+        ], comments: [],
       );
     }else if(id ==2){
       jobDetailModel =  JobDetailModel(
@@ -125,7 +125,7 @@ class FakeDioClient implements DioClient {
           'https://picsum.photos/200/300',
           'https://picsum.photos/200/300',
           'https://picsum.photos/200/300',
-        ],
+        ], comments: [],
       );
     }else if(id ==3){
       jobDetailModel =  JobDetailModel(
@@ -142,7 +142,7 @@ class FakeDioClient implements DioClient {
           'https://picsum.photos/200/300',
           'https://picsum.photos/200/300',
           'https://picsum.photos/200/300',
-        ],
+        ], comments: [],
       );
     }else if(id ==4){
       jobDetailModel =  JobDetailModel(
@@ -159,7 +159,7 @@ class FakeDioClient implements DioClient {
           'https://picsum.photos/200/300',
           'https://picsum.photos/200/300',
           'https://picsum.photos/200/300',
-        ],
+        ], comments: [],
       );
     }else if(id ==5){
       jobDetailModel =  JobDetailModel(
@@ -176,7 +176,7 @@ class FakeDioClient implements DioClient {
           'https://picsum.photos/200/300',
           'https://picsum.photos/200/300',
           'https://picsum.photos/200/300',
-        ],
+        ], comments: [],
       );
     }else if(id ==6){
       jobDetailModel =  JobDetailModel(
@@ -193,7 +193,7 @@ class FakeDioClient implements DioClient {
           'https://picsum.photos/200/300',
           'https://picsum.photos/200/300',
           'https://picsum.photos/200/300',
-        ],
+        ], comments: [],
       );
     }
 
