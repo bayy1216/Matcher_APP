@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shimmer/shimmer.dart';
 
+import '../../common/component/send_text_item.dart';
 import '../../common/const/data.dart';
 import '../../common/const/text_style.dart';
 import '../../common/layout/default_layout.dart';
@@ -46,40 +47,54 @@ class _JobDetailScreenState extends ConsumerState<JobDetailScreen> {
 
     return DefaultLayout(
       title: '',
-      body: ListView(
+      body: Column(
         children: [
-          _Writer(
-            writer: (state is JobDetailModel) ? state.userName : null,
-            date: state.date.toString(),
-            imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q='
-                'tbn:ANd9GcSK10NckXTTzmLQxJu6maCL_Z5SUTphEUjGvw&usqp=CAU',
-            major: state.userMajor,
-            studentNumber: state.userStudentNumber,
+          Expanded(
+            child: ListView(
+              children: [
+                _Writer(
+                  writer: (state is JobDetailModel) ? state.userName : null,
+                  date: state.date.toString(),
+                  imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q='
+                      'tbn:ANd9GcSK10NckXTTzmLQxJu6maCL_Z5SUTphEUjGvw&usqp=CAU',
+                  major: state.userMajor,
+                  studentNumber: state.userStudentNumber,
+                ),
+                const SizedBox(height: 10),
+                _Content(
+                  title: state.title,
+                  content: (state is JobDetailModel) ? state.content : null,
+                ),
+                const SizedBox(height: 30),
+                Image.network(
+                  state.thumbnailUrl,
+                  fit: BoxFit.fill,
+                ),
+                if (state is JobDetailModel)
+                  Column(
+                    children: state.comments.map((e) {
+                      return CommentItem.fromModel(
+                        model: e,
+                        onDelete: () {
+                          ref.read(jobProvider.notifier).deleteComment(
+                                jobId: widget.id,
+                                commentId: e.id,
+                              );
+                        },
+                      );
+                    }).toList(),
+                  ),
+              ],
+            ),
           ),
-          const SizedBox(height: 10),
-          _Content(
-            title: state.title,
-            content: (state is JobDetailModel) ? state.content : null,
+          SendTextItem(
+            onSubmitted: (String message) {
+              ref.read(jobProvider.notifier).createComment(
+                jobId: widget.id,
+                content: message,
+              );
+            },
           ),
-          const SizedBox(height: 30),
-          Image.network(
-            state.thumbnailUrl,
-            fit: BoxFit.fill,
-          ),
-          if (state is JobDetailModel)
-            Column(
-              children: state.comments.map((e) {
-                return CommentItem.fromModel(
-                  model: e,
-                  onDelete: () {
-                    ref.read(jobProvider.notifier).deleteComment(
-                          jobId: widget.id,
-                          commentId: e.id,
-                        );
-                  },
-                );
-              }).toList(),
-            )
         ],
       ),
     );
