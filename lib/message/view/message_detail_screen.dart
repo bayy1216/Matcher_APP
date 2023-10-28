@@ -1,11 +1,7 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../common/component/search_text_form_field.dart';
+import '../../common/component/send_text_item.dart';
 import '../../common/const/color.dart';
-import '../../common/const/data.dart';
 import '../../common/layout/default_layout.dart';
 import '../component/message_detail_item.dart';
 import '../model/message_model.dart';
@@ -28,8 +24,6 @@ class MessageDetailScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final textEditingController = TextEditingController();
-    final focusNode = FocusNode();
     final state = ref.watch(messageDetailProvider(id));
     final List<MessageModel> messageList = state.when(
       data: (data) => data,
@@ -54,39 +48,13 @@ class MessageDetailScreen extends ConsumerWidget {
               },
             ),
           ),
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: DEFAULT_WIDGET_PADDING, vertical: 8.0),
-            height: 50,
-            child: Row(
-              children: [
-                Expanded(
-                  child: SearchTextFormField(
-                    controller: textEditingController,
-                    focusNode: focusNode,
-                    hintText: '메시지를 입력하세요',
-                    onSubmitted: (message) {
-                      _sendMessage(textEditingController);
-                    },
-                  ),
-                ),
-                IconButton(
-                  onPressed: () {
-                    _sendMessage(textEditingController);
-                    focusNode.unfocus();
-                  },
-                  icon: const Icon(Icons.send),
-                ),
-              ],
-            ),
+          SendTextItem(
+            onSubmitted: (String message) {
+              //TODO: 메시지 전송
+            },
           ),
         ],
       ),
     );
-  }
-
-  Future<void> _sendMessage(TextEditingController controller) async{
-    log('message: ${controller.text}');
-    controller.text = '';
-    //TODO: SEND MESSAGE
   }
 }

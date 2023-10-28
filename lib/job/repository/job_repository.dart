@@ -32,5 +32,19 @@ class JobRepository implements IBasePaginationRepository<JobModel,Object>{
     return _dioClient.getDetailJobModel(id: id);
   }
 
+  Future<int> createComment({
+    required int jobId,
+    required String content,
+  })async {
+    return 1;
+  }
+
+  Future<void> deleteComment({
+    required int id,
+  })async{
+    return;
+  }
+
+
 
 }

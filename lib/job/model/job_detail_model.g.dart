@@ -19,6 +19,9 @@ JobDetailModel _$JobDetailModelFromJson(Map<String, dynamic> json) =>
           (json['imageUrl'] as List<dynamic>).map((e) => e as String).toList(),
       userStudentNumber: json['userStudentNumber'] as int,
       thumbnailUrl: json['thumbnailUrl'] as String,
+      comments: (json['comments'] as List<dynamic>)
+          .map((e) => CommentModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$JobDetailModelToJson(JobDetailModel instance) =>
@@ -33,4 +36,5 @@ Map<String, dynamic> _$JobDetailModelToJson(JobDetailModel instance) =>
       'userName': instance.userName,
       'content': instance.content,
       'imageUrl': instance.imageUrl,
+      'comments': instance.comments,
     };

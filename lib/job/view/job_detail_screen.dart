@@ -4,10 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shimmer/shimmer.dart';
 
+import '../../common/component/send_text_item.dart';
+import '../../common/const/color.dart';
 import '../../common/const/data.dart';
 import '../../common/const/text_style.dart';
 import '../../common/layout/default_layout.dart';
 import '../../common/utils/data_utils.dart';
+import '../component/comment_item.dart';
 import '../model/job_detail_model.dart';
 import '../provider/job_provider.dart';
 
@@ -30,11 +33,12 @@ class _JobDetailScreenState extends ConsumerState<JobDetailScreen> {
     super.initState();
     ref.read(jobProvider.notifier).getDetailJob(id: widget.id);
   }
+
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(jobDetailProvider(widget.id));
 
-    if(state == null) {
+    if (state == null) {
       return const DefaultLayout(
         body: Center(
           child: CircularProgressIndicator(),
@@ -44,25 +48,72 @@ class _JobDetailScreenState extends ConsumerState<JobDetailScreen> {
 
     return DefaultLayout(
       title: '',
-      body: ListView(
+      body: Column(
         children: [
-          _Writer(
-            writer: (state is JobDetailModel) ? state.userName : null,
-            date: state.date.toString(),
-            imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q='
-                'tbn:ANd9GcSK10NckXTTzmLQxJu6maCL_Z5SUTphEUjGvw&usqp=CAU',
-            major: state.userMajor,
-            studentNumber: state.userStudentNumber,
+          Expanded(
+            child: ListView(
+              children: [
+                _Writer(
+                  writer: (state is JobDetailModel) ? state.userName : null,
+                  date: state.date.toString(),
+                  imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q='
+                      'tbn:ANd9GcSK10NckXTTzmLQxJu6maCL_Z5SUTphEUjGvw&usqp=CAU',
+                  major: state.userMajor,
+                  studentNumber: state.userStudentNumber,
+                ),
+                const SizedBox(height: 10),
+                _Content(
+                  title: state.title,
+                  content: (state is JobDetailModel) ? state.content : null,
+                ),
+                const SizedBox(height: 30),
+                Image.network(
+                  state.thumbnailUrl,
+                  fit: BoxFit.fill,
+                ),
+                if (state is JobDetailModel)
+                  Column(
+                    children: state.comments.map((e) {
+                      if(e==state.comments.last){
+                        return CommentItem.fromModel(
+                          model: e,
+                          onDelete: () {
+                            ref.read(jobProvider.notifier).deleteComment(
+                              jobId: widget.id,
+                              commentId: e.id,
+                            );
+                          },
+                        );
+                      }
+                      return Column(
+                        children: [
+                          CommentItem.fromModel(
+                            model: e,
+                            onDelete: () {
+                              ref.read(jobProvider.notifier).deleteComment(
+                                    jobId: widget.id,
+                                    commentId: e.id,
+                                  );
+                            },
+                          ),
+                          const Divider(
+                            color: DIVIDIER_GREY,
+                            thickness: 0.5,
+                          ),
+                        ],
+                      );
+                    }).toList(),
+                  ),
+              ],
+            ),
           ),
-          const SizedBox(height: 10),
-          _Content(
-            title: state.title,
-            content: (state is JobDetailModel) ? state.content : null,
-          ),
-          const SizedBox(height: 30),
-          Image.network(
-            state.thumbnailUrl,
-            fit: BoxFit.fill,
+          SendTextItem(
+            onSubmitted: (String message) {
+              ref.read(jobProvider.notifier).createComment(
+                jobId: widget.id,
+                content: message,
+              );
+            },
           ),
         ],
       ),
@@ -109,12 +160,13 @@ class _Writer extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    if(writer == null) skeletonLoader()
+                    if (writer == null)
+                      skeletonLoader()
                     else
-                    Text(
-                      writer!,
-                      style: TITLE_MEDIUMN2_STYLE,
-                    ),
+                      Text(
+                        writer!,
+                        style: TITLE_MEDIUMN2_STYLE,
+                      ),
                     const SizedBox(
                       width: 10,
                     ),
@@ -176,7 +228,7 @@ class _Content extends StatelessWidget {
             style: TITLE_MEDIUMN2_STYLE,
           ),
           const SizedBox(height: 10),
-          if(content ==null)
+          if (content == null)
             skeletonLoader()
           else
             Text(
@@ -187,6 +239,7 @@ class _Content extends StatelessWidget {
       ),
     );
   }
+
   Widget skeletonLoader() {
     return Shimmer.fromColors(
       baseColor: Color.fromRGBO(240, 240, 240, 1),
