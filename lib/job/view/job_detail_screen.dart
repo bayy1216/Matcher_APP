@@ -8,6 +8,7 @@ import '../../common/const/data.dart';
 import '../../common/const/text_style.dart';
 import '../../common/layout/default_layout.dart';
 import '../../common/utils/data_utils.dart';
+import '../component/comment_item.dart';
 import '../model/job_detail_model.dart';
 import '../provider/job_provider.dart';
 
@@ -30,11 +31,12 @@ class _JobDetailScreenState extends ConsumerState<JobDetailScreen> {
     super.initState();
     ref.read(jobProvider.notifier).getDetailJob(id: widget.id);
   }
+
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(jobDetailProvider(widget.id));
 
-    if(state == null) {
+    if (state == null) {
       return const DefaultLayout(
         body: Center(
           child: CircularProgressIndicator(),
@@ -64,6 +66,20 @@ class _JobDetailScreenState extends ConsumerState<JobDetailScreen> {
             state.thumbnailUrl,
             fit: BoxFit.fill,
           ),
+          if (state is JobDetailModel)
+            Column(
+              children: state.comments.map((e) {
+                return CommentItem.fromModel(
+                  model: e,
+                  onDelete: () {
+                    ref.read(jobProvider.notifier).deleteComment(
+                          jobId: widget.id,
+                          commentId: e.id,
+                        );
+                  },
+                );
+              }).toList(),
+            )
         ],
       ),
     );
@@ -109,12 +125,13 @@ class _Writer extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    if(writer == null) skeletonLoader()
+                    if (writer == null)
+                      skeletonLoader()
                     else
-                    Text(
-                      writer!,
-                      style: TITLE_MEDIUMN2_STYLE,
-                    ),
+                      Text(
+                        writer!,
+                        style: TITLE_MEDIUMN2_STYLE,
+                      ),
                     const SizedBox(
                       width: 10,
                     ),
@@ -176,7 +193,7 @@ class _Content extends StatelessWidget {
             style: TITLE_MEDIUMN2_STYLE,
           ),
           const SizedBox(height: 10),
-          if(content ==null)
+          if (content == null)
             skeletonLoader()
           else
             Text(
@@ -187,6 +204,7 @@ class _Content extends StatelessWidget {
       ),
     );
   }
+
   Widget skeletonLoader() {
     return Shimmer.fromColors(
       baseColor: Color.fromRGBO(240, 240, 240, 1),

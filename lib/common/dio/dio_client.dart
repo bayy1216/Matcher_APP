@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:retrofit/http.dart';
 
+import '../../job/model/comment_model.dart';
 import '../../job/model/job_detail_model.dart';
 import '../../job/model/job_model.dart';
 import '../model/offset_pagination_model.dart';
@@ -108,7 +109,9 @@ class FakeDioClient implements DioClient {
           'https://picsum.photos/200/300',
           'https://picsum.photos/200/300',
           'https://picsum.photos/200/300',
-        ], comments: [],
+        ], comments: [
+          CommentModel(id: 1, content: 'content', date: DateTime.now(), userId: 1, userName: 'userName'),
+      ],
       );
     }else if(id ==2){
       jobDetailModel =  JobDetailModel(
