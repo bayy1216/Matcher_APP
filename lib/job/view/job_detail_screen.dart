@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../common/component/send_text_item.dart';
+import '../../common/const/color.dart';
 import '../../common/const/data.dart';
 import '../../common/const/text_style.dart';
 import '../../common/layout/default_layout.dart';
@@ -73,14 +74,33 @@ class _JobDetailScreenState extends ConsumerState<JobDetailScreen> {
                 if (state is JobDetailModel)
                   Column(
                     children: state.comments.map((e) {
-                      return CommentItem.fromModel(
-                        model: e,
-                        onDelete: () {
-                          ref.read(jobProvider.notifier).deleteComment(
-                                jobId: widget.id,
-                                commentId: e.id,
-                              );
-                        },
+                      if(e==state.comments.last){
+                        return CommentItem.fromModel(
+                          model: e,
+                          onDelete: () {
+                            ref.read(jobProvider.notifier).deleteComment(
+                              jobId: widget.id,
+                              commentId: e.id,
+                            );
+                          },
+                        );
+                      }
+                      return Column(
+                        children: [
+                          CommentItem.fromModel(
+                            model: e,
+                            onDelete: () {
+                              ref.read(jobProvider.notifier).deleteComment(
+                                    jobId: widget.id,
+                                    commentId: e.id,
+                                  );
+                            },
+                          ),
+                          const Divider(
+                            color: DIVIDIER_GREY,
+                            thickness: 0.5,
+                          ),
+                        ],
                       );
                     }).toList(),
                   ),
